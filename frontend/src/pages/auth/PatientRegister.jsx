@@ -44,7 +44,7 @@ function PatientRegister() {
     }
     try {
       const res = await patientRegister(formData);
-      loginUser(res.data.user);
+      loginUser(res.data.user, res.data.token);
       navigate("/patient/dashboard");
     } catch (err) {
       setError(err.response?.data?.msg || "Registration failed");

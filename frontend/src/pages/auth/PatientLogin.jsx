@@ -19,7 +19,7 @@ function PatientLogin() {
     setError("");
     try {
       const res = await patientLogin(form);
-      loginUser(res.data.user);
+      loginUser(res.data.user, res.data.token);
       navigate("/patient/dashboard");
     } catch (err) {
       setError(err.response?.data?.msg || "Login failed");

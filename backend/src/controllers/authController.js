@@ -40,7 +40,7 @@ export const doctorRegister = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(201).json({ msg: "Doctor registered", user: { id: doctor._id, name: doctor.name, role: doctor.role } });
+    res.status(201).json({ msg: "Doctor registered", token, user: { id: doctor._id, name: doctor.name, role: doctor.role } });
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
@@ -62,7 +62,7 @@ export const doctorLogin = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ msg: "Login successful", user: { id: doctor._id, name: doctor.name, role: doctor.role } });
+    res.json({ msg: "Login successful", token, user: { id: doctor._id, name: doctor.name, role: doctor.role } });
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
@@ -103,7 +103,7 @@ export const patientRegister = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.status(201).json({ msg: "Patient registered", user: { id: patient._id, name: patient.name, role: patient.role } });
+    res.status(201).json({ msg: "Patient registered", token, user: { id: patient._id, name: patient.name, role: patient.role } });
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
@@ -125,7 +125,7 @@ export const patientLogin = async (req, res) => {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ msg: "Login successful", user: { id: patient._id, name: patient.name, role: patient.role } });
+    res.json({ msg: "Login successful", token, user: { id: patient._id, name: patient.name, role: patient.role } });
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
   }

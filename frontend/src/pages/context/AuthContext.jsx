@@ -6,7 +6,10 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,14 +20,21 @@ export function AuthProvider({ children }) {
     try {
       const res = await getMe();
       setUser(res.data.user);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
     } catch (err) {
       setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
     setLoading(false);
   };
 
-  const loginUser = (userData) => {
+  const loginUser = (userData, token) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
+    if (token) {
+      localStorage.setItem("token", token);
+    }
   };
 
   const logoutUser = async () => {
@@ -32,6 +42,8 @@ export function AuthProvider({ children }) {
       await logoutApi();
     } catch (err) {}
     setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   return (

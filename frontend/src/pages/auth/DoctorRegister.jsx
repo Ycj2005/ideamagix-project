@@ -37,7 +37,7 @@ function DoctorRegister() {
     }
     try {
       const res = await doctorRegister(formData);
-      loginUser(res.data.user);
+      loginUser(res.data.user, res.data.token);
       navigate("/doctor/dashboard");
     } catch (err) {
       setError(err.response?.data?.msg || "Registration failed");
